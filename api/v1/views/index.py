@@ -10,7 +10,7 @@ from models import storage
 def status():
     """ This method Retutn json status code. """
 
-    var = {"status": "ok"}
+    var = {"status": "OK"}
     return jsonify(var)
 
 
