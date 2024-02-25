@@ -6,20 +6,22 @@ that handles all default RESTFul API actions."""
 from flask import jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
-from models.state import State
+from models.state import City
 
 
-@app_views.route("/states", methods=["GET", "POST"])
-@app_views.route("/states/", methods=["GET", "POST"])
-def states():
+@app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
+@app_views.route("/states/<state_id>/cities/", methods=["GET", "POST"])
+def city(state_id):
     """ This method Retrieves the list of
     all State objects. """
 
     if request.method == "GET":
+        if storage.get("State", state_id) is None:
+            abort(404)
         ls = []
-        all_state = storage.all("State")
-        if all_state is not None:
-            for key, value in all_state.items():
+        all_city = storage.all("City")
+        for key, value in all_city.items():
+            if value.state_id == state_id:
                 ls.append(value.to_dict())
 
         return jsonify(ls)
@@ -31,16 +33,16 @@ def states():
         if req.get("name") is None:
             abort(400, "Missing name")
 
-        new_state = State(**req)
+        new_state = City(**req)
         new_state.save()
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<s_id>", methods=["GET", "DELETE", "PUT"])
-def state(s_id):
+@app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
+def state(city_id):
     """ This method Retrieves a State object. """
 
-    obj = storage.get("State", s_id)
+    obj = storage.get("City", city_id)
     if obj is not None:
         if request.method == "GET":
             return jsonify(obj.to_dict())
