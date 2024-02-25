@@ -11,7 +11,7 @@ from models.state import City
 
 @app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
 @app_views.route("/states/<state_id>/cities/", methods=["GET", "POST"])
-def city(state_id):
+def cities(state_id):
     """ This method Retrieves the list of
     all State objects. """
 
@@ -39,7 +39,7 @@ def city(state_id):
 
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
-def state(city_id):
+def city(city_id):
     """ This method Retrieves a State object. """
 
     obj = storage.get("City", city_id)
