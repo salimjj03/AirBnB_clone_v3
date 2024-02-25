@@ -53,6 +53,7 @@ def state(s_id):
             if req is None:
                 abort(400, "Not a JSON")
             obj.name = req["name"]
+            obj.save()
             return jsonify(obj.to_dict()), 200
 
     abort(404)
