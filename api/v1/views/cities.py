@@ -15,9 +15,9 @@ def cities(state_id):
     """ This method Retrieves the list of
     all State objects. """
 
+    if storage.get("State", state_id) is None:
+        abort(404)
     if request.method == "GET":
-        if storage.get("State", state_id) is None:
-            abort(404)
         ls = []
         all_city = storage.all("City")
         for key, value in all_city.items():

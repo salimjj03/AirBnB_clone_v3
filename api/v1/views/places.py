@@ -55,11 +55,14 @@ def place(place_id):
             del obj
             return jsonify("{}"), 200
         elif request.method == "PUT":
+            if not request.json:
+                abort(400, "Not a JSON")
             req = request.get_json()
             if req is None:
                 abort(400, "Not a JSON")
-            obj.name = req["name"]
-            obj.save()
-            return jsonify(obj.to_dict()), 200
+            else:
+                obj.name = req["name"]
+                obj.save()
+                return jsonify(obj.to_dict()), 200
 
     abort(404)
