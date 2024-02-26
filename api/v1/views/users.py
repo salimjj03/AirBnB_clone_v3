@@ -56,8 +56,8 @@ def user(s_id):
             req = request.get_json()
             if req is None:
                 abort(400, "Not a JSON")
-            obj.name = req["name"]
-            obj.name = req["password"]
+            obj.name = req.get("name")
+            obj.name = req.get("password")
             obj.save()
             return jsonify(obj.to_dict()), 200
 
