@@ -18,8 +18,6 @@ def places(city_id):
     if storage.get("City", city_id) is None:
         abort(404)
     if request.method == "GET":
-        if storage.get("Place", city_id) is None:
-            abort(404)
         ls = []
         all_place = storage.all("Place")
         for key, value in all_place.items():
